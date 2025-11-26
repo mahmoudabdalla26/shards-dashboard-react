@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import shortid from "shortid";
 import { Card, CardBody } from "shards-react";
 
 import Chart from "../../utils/chart";
@@ -140,7 +139,7 @@ class SmallStats extends React.Component {
           <canvas
             height={canvasHeight}
             ref={this.canvasRef}
-            className={`stats-small-${shortid()}`}
+            className={`stats-small-${Math.random().toString(36).substr(2, 9)}`}
           />
         </CardBody>
       </Card>

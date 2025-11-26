@@ -1,5 +1,3 @@
-import { EventEmitter } from "events";
-
 import Dispatcher from "./dispatcher";
 import Constants from "./constants";
 import getSidebarNavItems from "../data/sidebar-nav-items";
@@ -9,10 +7,9 @@ let _store = {
   navItems: getSidebarNavItems()
 };
 
-class Store extends EventEmitter {
+class Store {
   constructor() {
-    super();
-
+    this.listeners = [];
     this.registerToActions = this.registerToActions.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
 
@@ -30,7 +27,7 @@ class Store extends EventEmitter {
 
   toggleSidebar() {
     _store.menuVisible = !_store.menuVisible;
-    this.emit(Constants.CHANGE);
+    this.emitChange();
   }
 
   getMenuState() {
@@ -42,11 +39,15 @@ class Store extends EventEmitter {
   }
 
   addChangeListener(callback) {
-    this.on(Constants.CHANGE, callback);
+    this.listeners.push(callback);
   }
 
   removeChangeListener(callback) {
-    this.removeListener(Constants.CHANGE, callback);
+    this.listeners = this.listeners.filter(listener => listener !== callback);
+  }
+
+  emitChange() {
+    this.listeners.forEach(listener => listener());
   }
 }
 
