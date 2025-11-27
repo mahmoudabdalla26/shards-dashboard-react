@@ -13,12 +13,13 @@ import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 
+const RedirectHome = () => <Navigate to="/blog-overview" replace />;
+
 export default [
   {
     path: "/",
-    exact: true,
     layout: DefaultLayout,
-    component: () => <Navigate to="/blog-overview" replace />
+    component: RedirectHome
   },
   {
     path: "/blog-overview",
